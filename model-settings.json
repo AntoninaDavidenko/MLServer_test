@@ -1,0 +1,4 @@
+{
+  "name": "img2vec",
+  "implementation": "model.ImageModel"
+}
