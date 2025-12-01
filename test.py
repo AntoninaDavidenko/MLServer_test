@@ -1,5 +1,6 @@
 import requests
 import base64
+import numpy as np
 
 with open("image1.jpg", "rb") as f:
     img = base64.b64encode(f.read()).decode()
@@ -21,5 +22,5 @@ response = requests.post(
     json=payload
 )
 
-vector = response.json()["outputs"][0]["data"]
+vector = np.array(response.json()["outputs"][0]["data"])
 print(vector)

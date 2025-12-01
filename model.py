@@ -8,9 +8,10 @@ import torch
 
 class ImageModel(MLModel):
     async def load(self):
-        self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(self.device)
         self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
-
+        self.model.eval()
         return True
 
     async def predict(self, payload):
@@ -19,8 +20,9 @@ class ImageModel(MLModel):
         image = Image.open(io.BytesIO(image_bytes))
 
         inputs = self.processor(images=image, return_tensors="pt")
+        inputs = {k: v.to(self.device) for k, v in inputs.items()}
         with torch.no_grad():
-            vector = self.model.get_image_features(**inputs)[0].tolist()
+            vector = self.model.get_image_features(**inputs)[0].cpu().tolist()
 
 
         output = ResponseOutput(
