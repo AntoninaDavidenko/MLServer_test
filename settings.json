@@ -1,3 +1,6 @@
 {
-  "parallel_workers": 0
+  "parallel_workers": 0,
+  "host": "0.0.0.0",
+  "http_port": 9600,
+  "grpc_port": 9500
 }

@@ -1,4 +1,4 @@
 {
-  "name": "img2vec",
-  "implementation": "model.ImageModel"
+  "name": "tflight",
+  "implementation": "model.TFLightModel"
 }
